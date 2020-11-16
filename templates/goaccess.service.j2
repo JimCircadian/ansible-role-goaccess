@@ -1,0 +1,13 @@
+[Unit]
+Description=Goaccess
+After=network.target
+
+[Service]
+Type=simple
+User={{ goaccess_user_name }}
+Group={{ goaccess_user_group_name }}
+Restart=always
+ExecStart=/usr/bin/goaccess -p "{{ goaccess_base_dir }}/goaccess.conf"
+
+[Install]
+WantedBy=multi-user.target
