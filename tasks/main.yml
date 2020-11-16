@@ -1,0 +1,76 @@
+---
+- name: "Include {{ ansible_os_family }} variables"
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: Install goaccess
+  package:
+    name:   "{{ item }}"
+  with_items:
+    - goaccess
+
+- name: Create GoAccess user group
+  group:
+    name:   "{{ goaccess_user_group_name }}"
+    gid:    "{{ goaccess_user_group_gid or omit }}"
+
+# TODO: Ended up in "users" group, not ideal
+- name: Create GoAccess user
+  user:
+    name:   "{{ goaccess_user_name }}"
+    create_home:  yes
+    home:   "{{ goaccess_user_home }}"
+    shell:  "/sbin/nologin"
+    system: yes
+    uid:    "{{ goaccess_user_uid or omit }}"
+    groups:
+      - "{{ goaccess_www_group }}"
+
+- name: Ensure log directory is readable
+  file:
+    path:   "{{ goaccess_apache_logs_dir }}"
+    mode:   g+rx
+    # TODO: This should be a distinct group, bad practice to use httpd's group
+    group:  "{{ goaccess_www_group }}"
+  when:   goaccess_apache_logs_dir is defined
+
+- name: Create directory for goaccess config
+  file:
+    path:   "{{ goaccess_base_dir }}/html"
+    state:  directory
+    owner:  root
+    group:  root
+    mode: 0775
+
+- name: Create directory for goaccess content
+  file:
+    path: "{{ goaccess_html_dir }}"
+    state: directory
+    owner: "{{ goaccess_user_name }}"
+    group: "{{ goaccess_user_group_name }}"
+    mode: 0775
+
+- name: Create configuration for GoAccess
+  template:
+    src:    "goaccess.{{ goaccess_template_version }}.conf.j2"
+    dest:   "{{ goaccess_base_dir }}/goaccess.conf"
+    owner:  root
+    group:  root
+    mode:   0644
+
+- name: Create GoAccess service
+  template:
+    src:    goaccess.service.j2
+    dest:   "{{ goaccess_systemd_service }}"
+    owner:  root
+    group:  root
+    mode:   0644
+  register: goaccess_template_service
+
+- name: Enable and start the service
+  systemd:
+    state:    restarted
+    daemon_reload: yes
+    name:     goaccess
+    enabled:  true

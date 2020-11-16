@@ -1,0 +1,110 @@
+---
+
+# Integration
+goaccess_base_dir:  /var/www/goaccess
+goaccess_html_dir:  "{{ goaccess_base_dir }}/html"
+goaccess_config:    "{{ goaccess_base_dir }}/goaccess.conf"
+goaccess_systemd_service:   /etc/systemd/system/goaccess.service
+
+goaccess_www_user:  apache
+goaccess_www_group: apache
+goaccess_apache_logs_dir:   /var/log/httpd
+
+goaccess_user_group_name:   goaccess
+goaccess_user_group_gid:    null
+
+goaccess_user_name:     goaccess
+goaccess_user_home:     /var/opt/goaccess
+goaccess_user_uid:      null
+
+##
+# goaccess.conf template
+#
+
+# Formats
+goaccess_log_format:    COMBINED
+goaccess_time_format:   '%H:%M:%S'
+goaccess_date_format:   '%d/%b/%Y'
+
+# Server options
+goaccess_addr:          0.0.0.0
+goaccess_daemonize:     false
+goaccess_origin:        null
+goaccess_port:          7890
+goaccess_pid_file:      /var/run/goaccess.pid
+goaccess_real_time_html:  true
+goaccess_ssl_cert:      null
+goaccess_ssl_key:       null
+goaccess_ws_url:        null
+goaccess_fifo_in:       null
+goaccess_fifo_out:      null
+
+# UI Options
+goaccess_color_scheme:      3
+goaccess_config_dialog:     false
+goaccess_hl_header:         true
+goaccess_html_custom_css:   null
+goaccess_html_custom_js:    null
+goaccess_html_prefs:        null
+goaccess_html_report_title: null
+goaccess_json_pretty_print: false
+goaccess_no_color:          false
+goaccess_no_column_names:   false
+goaccess_no_csv_summary:    false
+goaccess_no_progress:       false
+goaccess_no_tab_scroll:     false
+goaccess_no_parsing_spinner:  true
+goaccess_no_html_last_updated:  true
+goaccess_with_mouse:        false
+goaccess_max_items:         366
+goaccess_color:             []
+
+# File Options
+goaccess_log_file:          null
+goaccess_debug_file:        null
+goaccess_config_file:       null
+goaccess_invalid_requests:  null
+goaccess_no_global_config:  false
+
+# Parse Options
+goaccess_agent_list:        false
+goaccess_with_output_resolver:  false
+goaccess_exclude_ip:        []
+goaccess_http_method:       'yes'
+goaccess_http_protocol:     'yes'
+goaccess_no_query_string:   false
+goaccess_no_term_resolver:  false
+# v1.4? Unknown param error
+#goaccess_accumulated_time:  false
+goaccess_444_as_404:        false
+goaccess_4xx_to_unique_count: false
+goaccess_anonymize_ip:      false
+goaccess_all_static_files:  false
+goaccess_browsers_file:     null
+goaccess_date_spec:         date
+goaccess_double_decode:     false
+goaccess_enable_panel:      []
+goaccess_hide_referer:      []
+goaccess_hour_spec:         hr
+goaccess_ignore_crawlers:   false
+goaccess_crawlers_only:     false
+goaccess_ignore_statics:    req
+
+goaccess_ignore_panel:
+- REFERRERS
+- KEYPHRASES
+goaccess_ignore_referer:    []
+goaccess_ignore_status:     []
+
+# v1.4 only
+# goaccess_keep_last:         7
+# goaccess_no_ip_validation:  true
+
+goaccess_num_tests:         10
+goaccess_process_and_exit:  false
+goaccess_real_os:           true
+goaccess_sort_panel:        []
+goaccess_static_file:       []
+
+# TODO: GeoIP
+# TODO: Tokyo Cabinet (removed in v1.4)
