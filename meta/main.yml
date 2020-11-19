@@ -24,6 +24,7 @@ galaxy_info:
   - apache
   - httpd
   - logs
+  - goaccess
 
 dependencies: []
   
