@@ -8,6 +8,7 @@ goaccess_systemd_service:   /etc/systemd/system/goaccess.service
 
 goaccess_www_user:  apache
 goaccess_www_group: apache
+
 goaccess_apache_logs_dir:   /var/log/httpd
 
 goaccess_user_group_name:   goaccess
@@ -60,7 +61,7 @@ goaccess_max_items:         366
 goaccess_color:             []
 
 # File Options
-goaccess_log_file:          null
+goaccess_log_files:         []
 goaccess_debug_file:        null
 goaccess_config_file:       null
 goaccess_invalid_requests:  null

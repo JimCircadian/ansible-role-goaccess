@@ -40,6 +40,16 @@ goaccess_user_uid:      null
 
 ALL other variables relate to templating the goaccess configuration. [Refer here for more information...](https://goaccess.io/man#configuration)
 
+I tend to use a simple SSH forwarding with a static hostname to call the report
+HTML served from 8080 on my VPS. I'm sure they're better ways, but it works...
+
+```
+Host staging-metrics
+    LocalForward 8080 127.0.0.1:8080
+    LocalForward 7890 127.0.0.1:7890
+    Hostname staging-vps
+```
+
 Dependencies
 ------------
 

@@ -364,8 +364,10 @@ fifo-out {{ goaccess_fifo_out }}
 # priority over -f from the command line.
 #
 #log-file /var/log/apache2/access.log
-{% if goaccess_log_file %}
-log-file {{ goaccess_log_file }}
+{% if goaccess_log_files|length > 0 %}
+{% for log_file in goaccess_log_files %}
+log-file {{ log_file }}
+{% endfor %}
 {% endif %}
 
 # Send all debug messages to the specified file.
