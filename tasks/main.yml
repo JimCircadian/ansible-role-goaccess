@@ -39,6 +39,7 @@
   file:
     path:   "{{ item }}"
     state:  touch
+    mode:   0644
   with_items:
     - "{{ goaccess_log_files }}"
 
